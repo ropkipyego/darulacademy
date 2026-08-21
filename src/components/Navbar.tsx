@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Menu, X, GraduationCap } from "lucide-react";
 import { WHATSAPP_URL } from "./WhatsAppButton";
+import { LanguageToggle } from "./LanguageToggle";
+import { useLang, type TKey } from "@/lib/i18n";
 
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#why", label: "Why Us" },
-  { href: "#academics", label: "Academics" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#news", label: "News" },
-  { href: "#admissions", label: "Admissions" },
-  { href: "#contact", label: "Contact" },
+const links: { href: string; key: TKey }[] = [
+  { href: "/#about", key: "nav.about" },
+  { href: "/#why", key: "nav.why" },
+  { href: "/#academics", key: "nav.academics" },
+  { href: "/#gallery", key: "nav.gallery" },
+  { href: "/#admissions", key: "nav.admissions" },
+  { href: "/#contact", key: "nav.contact" },
 ];
+
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
