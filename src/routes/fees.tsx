@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Download, Printer, ArrowLeft, Receipt } from "lucide-react";
+import { Download, Printer, ArrowLeft, Receipt, CalendarDays, Eye, EyeOff } from "lucide-react";
 
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -42,6 +43,32 @@ export const Route = createFileRoute("/fees")({
 
 function FeesPage() {
   const { t } = useLang();
+  const [showAnnual, setShowAnnual] = useState(false);
+
+  function downloadAnnualCsv() {
+    const header = [
+      "Level",
+      "Tuition per term (KES)",
+      "Activity & exams (KES)",
+      "Lunch (KES)",
+      "Total per term (KES)",
+      "Total per year - 3 terms (KES)",
+    ];
+    const lines = [
+      "Darul Ilmi Primary & Junior School — Annual Fee Structure 2026",
+      header.join(","),
+      ...FEES.map((r) =>
+        [`"${r.level}"`, r.tuition, r.activity, r.lunch, total(r), total(r) * 3].join(","),
+      ),
+    ];
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "darul-ilmi-annual-fee-structure-2026.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   function downloadCsv() {
     const header = ["Level", "Tuition per term (KES)", "Activity & exams (KES)", "Lunch (KES)", "Total per term (KES)"];
@@ -124,6 +151,57 @@ function FeesPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          <div className="mt-8 rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-card-soft">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 shrink-0 rounded-xl bg-primary/10 grid place-items-center">
+                <CalendarDays className="h-5 w-5 text-primary" />
+              </div>
+              <h2 className="text-xl font-bold text-foreground">{t("fees.annual.title")}</h2>
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{t("fees.annual.body")}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={downloadAnnualCsv}
+                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold shadow-card-soft hover:shadow-elegant transition-all"
+              >
+                <Download className="h-4 w-4" />
+                {t("fees.annual.download")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowAnnual((v) => !v)}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground hover:bg-secondary transition-colors"
+              >
+                {showAnnual ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showAnnual ? t("fees.annual.hide") : t("fees.annual.view")}
+              </button>
+            </div>
+
+            {showAnnual && (
+              <div className="mt-6 overflow-x-auto rounded-2xl border border-border animate-fade-in">
+                <table className="w-full min-w-[520px] text-sm">
+                  <thead>
+                    <tr className="bg-secondary/60">
+                      <th className="px-5 py-3 text-start font-semibold text-foreground">{t("fees.level")}</th>
+                      <th className="px-5 py-3 text-start font-semibold text-foreground">{t("fees.annual.term")}</th>
+                      <th className="px-5 py-3 text-start font-semibold text-foreground">{t("fees.annual.year")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {FEES.map((r) => (
+                      <tr key={r.level} className="border-t border-border">
+                        <td className="px-5 py-3 font-medium text-foreground">{r.level}</td>
+                        <td className="px-5 py-3 text-muted-foreground">KES {money(total(r))}</td>
+                        <td className="px-5 py-3 font-semibold text-primary">KES {money(total(r) * 3)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           <div className="mt-8 rounded-3xl border border-border bg-secondary/40 p-6 sm:p-8">
