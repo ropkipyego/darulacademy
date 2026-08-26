@@ -18,6 +18,7 @@ const links: { href: string; key: TKey }[] = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { t } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -50,7 +51,7 @@ export function Navbar() {
             </div>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-7">
             {links.map((l) => (
               <a
                 key={l.href}
@@ -59,26 +60,35 @@ export function Navbar() {
                   scrolled ? "text-foreground/80 hover:text-primary" : "text-white/90 hover:text-white"
                 }`}
               >
-                {l.label}
+                {t(l.key)}
               </a>
             ))}
+            <Link
+              to="/fees"
+              className={`text-sm font-medium transition-colors ${
+                scrolled ? "text-foreground/80 hover:text-primary" : "text-white/90 hover:text-white"
+              }`}
+            >
+              {t("nav.fees")}
+            </Link>
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
+            <LanguageToggle light={!scrolled} />
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold shadow-card-soft hover:shadow-elegant transition-all"
             >
-              Apply Now
+              {t("nav.apply")}
             </a>
           </div>
 
           <button
             onClick={() => setOpen((v) => !v)}
             className={`lg:hidden p-2 rounded-md ${scrolled ? "text-foreground" : "text-white"}`}
-            aria-label="Toggle menu"
+            aria-label={t("nav.menu")}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -95,16 +105,26 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary rounded-md"
               >
-                {l.label}
+                {t(l.key)}
               </a>
             ))}
+            <Link
+              to="/fees"
+              onClick={() => setOpen(false)}
+              className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary rounded-md"
+            >
+              {t("nav.fees")}
+            </Link>
+            <div className="px-3 py-2">
+              <LanguageToggle />
+            </div>
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-center mt-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-semibold"
             >
-              Apply Now
+              {t("nav.apply")}
             </a>
           </div>
         </div>

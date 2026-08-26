@@ -62,6 +62,14 @@ const dict = {
     "fees.enquire": "Enquire about fees",
     "fees.back": "Back to home",
     "fees.currency": "KES",
+    "fees.annual.title": "Annual fee structure 2026",
+    "fees.annual.body":
+      "Download or view the full-year fee structure (all three terms) as often as you need — no sign-up, no limits.",
+    "fees.annual.download": "Download annual fee structure (CSV)",
+    "fees.annual.view": "View annual fee structure",
+    "fees.annual.hide": "Hide annual fee structure",
+    "fees.annual.term": "Per term",
+    "fees.annual.year": "Full year (3 terms)",
   },
   ar: {
     "nav.about": "من نحن",
@@ -119,6 +127,14 @@ const dict = {
     "fees.enquire": "استفسار عن الرسوم",
     "fees.back": "العودة للرئيسية",
     "fees.currency": "شلن",
+    "fees.annual.title": "هيكل الرسوم السنوي 2026",
+    "fees.annual.body":
+      "حمّل أو اعرض هيكل الرسوم للعام كامل (الفصول الثلاثة) في أي وقت — بدون تسجيل وبدون حدود.",
+    "fees.annual.download": "تحميل هيكل الرسوم السنوي (CSV)",
+    "fees.annual.view": "عرض هيكل الرسوم السنوي",
+    "fees.annual.hide": "إخفاء هيكل الرسوم السنوي",
+    "fees.annual.term": "لكل فصل",
+    "fees.annual.year": "السنة كاملة (٣ فصول)",
   },
 } as const;
 
