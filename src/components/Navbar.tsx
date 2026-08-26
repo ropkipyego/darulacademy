@@ -74,7 +74,7 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
-            <LanguageToggle scrolled={scrolled} />
+            <LanguageToggle light={!scrolled} />
             <a
               href={WHATSAPP_URL}
               target="_blank"
@@ -88,7 +88,7 @@ export function Navbar() {
           <button
             onClick={() => setOpen((v) => !v)}
             className={`lg:hidden p-2 rounded-md ${scrolled ? "text-foreground" : "text-white"}`}
-            aria-label="Toggle menu"
+            aria-label={t("nav.menu")}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -105,16 +105,26 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary rounded-md"
               >
-                {l.label}
+                {t(l.key)}
               </a>
             ))}
+            <Link
+              to="/fees"
+              onClick={() => setOpen(false)}
+              className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary rounded-md"
+            >
+              {t("nav.fees")}
+            </Link>
+            <div className="px-3 py-2">
+              <LanguageToggle />
+            </div>
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-center mt-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-semibold"
             >
-              Apply Now
+              {t("nav.apply")}
             </a>
           </div>
         </div>
