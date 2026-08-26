@@ -51,7 +51,7 @@ export function Navbar() {
             </div>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-7">
             {links.map((l) => (
               <a
                 key={l.href}
@@ -60,19 +60,28 @@ export function Navbar() {
                   scrolled ? "text-foreground/80 hover:text-primary" : "text-white/90 hover:text-white"
                 }`}
               >
-                {l.label}
+                {t(l.key)}
               </a>
             ))}
+            <Link
+              to="/fees"
+              className={`text-sm font-medium transition-colors ${
+                scrolled ? "text-foreground/80 hover:text-primary" : "text-white/90 hover:text-white"
+              }`}
+            >
+              {t("nav.fees")}
+            </Link>
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
+            <LanguageToggle scrolled={scrolled} />
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold shadow-card-soft hover:shadow-elegant transition-all"
             >
-              Apply Now
+              {t("nav.apply")}
             </a>
           </div>
 
